@@ -13,7 +13,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    Montserrat: require('../assets/fonts/Montserrat-Regular.otf'),
+    Montserrat: require('@/assets/fonts/Montserrat-Regular.otf'),
   });
 
   useEffect(() => {
