@@ -1,4 +1,6 @@
 import { Text, StyleSheet } from "react-native";
+import React from 'react';
+
 
 type Props = {
     text: string

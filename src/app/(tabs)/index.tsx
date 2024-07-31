@@ -3,6 +3,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/src/constants/Colors";
 import CTABlueButton from "@/src/components/button/CTABlueButton";
 import CTAGreenButton from "@/src/components/button/CTAGreenButton";
+import React from 'react';
+
 
 export default function HomeScreen() {
   return (
