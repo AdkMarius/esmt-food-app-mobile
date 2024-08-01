@@ -1,13 +1,13 @@
-import { Text, StyleSheet } from "react-native";
+import {Text, StyleSheet, TextStyle} from "react-native";
 import React from 'react';
 
 type Props = {
+    textStyle?: TextStyle
     text: string
 };
 
-function TitleFont({ text }: Props) {
-
-    return <Text style={styles.title}>{ text }</Text>
+const TitleFont: React.FC<Props> = ({ text, textStyle }) => {
+    return <Text style={[styles.title, textStyle]}>{ text }</Text>
 }
 
 const styles = StyleSheet.create({

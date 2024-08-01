@@ -10,18 +10,28 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors.light.tintBlue,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
-        }}
-      />
+        screenOptions={{
+            tabBarActiveTintColor: Colors.light.tintBlue,
+        }}>
+        <Tabs.Screen
+            name="index"
+            options={{
+              title: 'Home',
+              tabBarIcon: ({ color, focused }) => (
+                <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+              ),
+            }}
+        />
+        <Tabs.Screen
+            name="(auth)"
+            options={{
+                title: 'Auth',
+                tabBarIcon: ({ color, focused }) => (
+                    <TabBarIcon name={focused ? 'log-in' : 'log-in-outline'} color={color} />
+                ),
+                headerShown: false
+            }}
+        />
     </Tabs>
   );
 }

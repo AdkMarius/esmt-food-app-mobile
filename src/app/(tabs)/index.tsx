@@ -13,7 +13,7 @@ export default function HomeScreen() {
         <Text>Home Screen</Text>
         <CTABlueButton text="Creer un button ici" />
         <CTAGreenButton text="Creer un autre ici" />
-        <WHITEButton title="Créer un compte avec Google"/>
+        <WHITEButton title="Créer un compte avec Google" icon='google' />
     </SafeAreaView>
   );
 }

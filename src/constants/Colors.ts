@@ -18,7 +18,7 @@ export const Colors = {
     tintBlue: lightBlue,
     tintGreen: lightGreen,
     tintPrice: lightYellow,
-    backgroundIcon: dirtyWhite,
+    icon: dirtyWhite,
     tabIconDefault: lightBlue,
     tabIconSelected: lightGreen,
   }

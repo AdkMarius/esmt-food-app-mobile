@@ -1,14 +1,14 @@
-import { Text, StyleSheet } from "react-native";
+import {Text, StyleSheet, TextStyle} from "react-native";
 import React from 'react';
 
 
 type Props = {
+    textStyle?: TextStyle
     text: string
 };
 
-function BodyFontSmall({ text }: Props) {
-
-    return <Text style={styles.smallBody}>{ text }</Text>
+const BodyFontSmall: React.FC<Props> = ({ text, textStyle }) => {
+    return <Text style={[styles.smallBody, textStyle]}>{ text }</Text>
 }
 
 const styles = StyleSheet.create({
