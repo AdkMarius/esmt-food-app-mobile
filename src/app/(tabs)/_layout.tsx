@@ -6,46 +6,37 @@ import { Colors } from '@/src/constants/Colors';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import TabBar from '../../components/TabBar'
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors.light.tintGreen,
-        tabBarInactiveTintColor: '#0F8ACE',
-      }}>
+      tabBar={props => <TabBar {...props} />}
+      >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
+          title: '',
         }}
       />
       <Tabs.Screen
         name="menu"
         options={{
-          title: 'menu',
-          tabBarIcon: ({ color, focused }) => (
-            <Feather name="menu" size={24} color={color}/>
-          ),
+          title: '',
         }}
       />
       <Tabs.Screen
         name="panier"
         options={{
-          title: 'panier',
-          tabBarIcon: ({ color, focused }) => (
-            <Feather name="shopping-cart" size={24} color={color} />          ),
+          title: '',
         }}
       />
       <Tabs.Screen
         name="deco"
         options={{
-          title: 'deconnexion',
+          title: '',
           tabBarIcon: ({ color, focused }) => (
             <MaterialIcons name="logout" size={24} color={color} />          ),
         }}
