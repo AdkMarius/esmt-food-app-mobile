@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
   },
   imageproduct: {
-    width: '80%',
+    width: '70%',
     aspectRatio:1,
     borderRadius: 110,
     marginBottom: 10, 

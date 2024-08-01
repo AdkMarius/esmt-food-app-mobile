@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform, View, Text,} from 'react-native';
+import { Image, StyleSheet, Platform, View, Text, ScrollView} from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/src/constants/Colors";
 import CTABlueButton from "@/src/components/button/CTABlueButton";
@@ -13,13 +13,16 @@ import Historique from '@/src/components/Historique';
 
 export default function HomeScreen() {
   return (
-    <View style={styles.home}>
+    <ScrollView style={styles.home}>
       <Text style={ styles.title}>Categories</Text>
       <CategorieList categorie={categories[0]}/>
-      <Historique order={orders[0]}/>
+      <Text style={ styles.title}>Produits populaires</Text>
+      {/* afficher les produits populaires */}
+      <Text style={ styles.title}>Menu du jour</Text>
+      <MenuDuJour product={products[1]} />
+      <CTABlueButton text='Commander le menu du jour'/>
 
-
-    </View>
+    </ScrollView>
   );
 }
  
