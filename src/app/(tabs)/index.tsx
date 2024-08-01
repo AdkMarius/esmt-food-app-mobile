@@ -5,9 +5,11 @@ import CTABlueButton from "@/src/components/button/CTABlueButton";
 import CTAGreenButton from "@/src/components/button/CTAGreenButton";
 import WHITEButton from '@/src/components/button/WHITEButton';
 import React from 'react';
-import {categories, products} from '../../../assets/data/data';
+import {categories, products, orders} from '../../../assets/data/data';
 import CategorieList from '@/src/components/CategorieList';
 import MenuDuJour from '@/src/components/MenuDuJour';
+import CommandePrecedente from '@/src/components/CommandePrecedente';
+
 
 
 
@@ -16,7 +18,7 @@ export default function HomeScreen() {
     <View style={styles.home}>
       <Text style={ styles.title}>Categories</Text>
       <CategorieList categorie={categories[0]}/>
-      <MenuDuJour product={products[1]} />
+      <CommandePrecedente order={orders[0]}/>
 
 
     </View>
