@@ -11,9 +11,6 @@ import MenuDuJour from '@/src/components/MenuDuJour';
 import CommandePrecedente from '@/src/components/CommandePrecedente';
 import Historique from '@/src/components/Historique';
 
-
-
-
 export default function HomeScreen() {
   return (
     <View style={styles.home}>

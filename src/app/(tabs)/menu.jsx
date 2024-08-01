@@ -4,7 +4,9 @@ import { Tabs } from "expo-router";
 
 const Menu = () => {
     return(
-        <Tabs/>
+    <View>
+        <Text>Menu</Text>
+    </View>  
     )
 }
 

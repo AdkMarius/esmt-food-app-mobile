@@ -4,7 +4,9 @@ import { Tabs } from "expo-router";
 
 const Panier = () => {
     return(
-        <Tabs/>
+        <View>
+            <Text>Panier</Text>
+        </View>
     )
 }
 
