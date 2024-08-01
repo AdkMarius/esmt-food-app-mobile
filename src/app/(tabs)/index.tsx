@@ -9,6 +9,7 @@ import {categories, products, orders} from '../../../assets/data/data';
 import CategorieList from '@/src/components/CategorieList';
 import MenuDuJour from '@/src/components/MenuDuJour';
 import CommandePrecedente from '@/src/components/CommandePrecedente';
+import Historique from '@/src/components/Historique';
 
 
 
@@ -18,7 +19,7 @@ export default function HomeScreen() {
     <View style={styles.home}>
       <Text style={ styles.title}>Categories</Text>
       <CategorieList categorie={categories[0]}/>
-      <CommandePrecedente order={orders[0]}/>
+      <Historique order={orders[0]}/>
 
 
     </View>
