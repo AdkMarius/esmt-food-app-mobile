@@ -24,14 +24,14 @@ export default MenuDuJour;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.light.background,
-    flexDirection: 'row', // Place les éléments en ligne
-    justifyContent: 'space-around', // Espace les éléments de manière égale
+    flexDirection: 'row', 
+    justifyContent: 'space-around',
     padding: 20,
     borderRadius: 25,
 
   },
   item: {
-    alignItems: 'center', // Centre l'image et le texte horizontalement
+    alignItems: 'center', 
   },
   imageproduct: {
     width: '80%',
