@@ -5,8 +5,9 @@ import CTABlueButton from "@/src/components/button/CTABlueButton";
 import CTAGreenButton from "@/src/components/button/CTAGreenButton";
 import WHITEButton from '@/src/components/button/WHITEButton';
 import React from 'react';
-import {categories} from '../../../assets/data/data';
+import {categories, products} from '../../../assets/data/data';
 import CategorieList from '@/src/components/CategorieList';
+import MenuDuJour from '@/src/components/MenuDuJour';
 
 
 
@@ -15,7 +16,7 @@ export default function HomeScreen() {
     <View style={styles.home}>
       <Text style={ styles.title}>Categories</Text>
       <CategorieList categorie={categories[0]}/>
-      <Text style={ styles.title}>Produits populaires</Text>
+      <MenuDuJour product={products[1]} />
 
 
     </View>
@@ -25,6 +26,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   home: {
     backgroundColor: Colors.light.background,
+    flex:1
   },
   title: { 
     fontSize:20,

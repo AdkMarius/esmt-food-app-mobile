@@ -22,13 +22,12 @@ export default CategorieList;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.light.background,
-    flex: 1,
-    flexDirection: 'row', // Place les éléments en ligne
-    justifyContent: 'space-around', // Espace les éléments de manière égale
+    flexDirection: 'row', 
+    justifyContent: 'space-around', 
     padding: 20,
   },
   item: {
-    alignItems: 'center', // Centre l'image et le texte horizontalement
+    alignItems: 'center',
   },
   imagecategorie: {
     width: 50,
