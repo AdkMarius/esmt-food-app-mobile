@@ -15,6 +15,9 @@ export default function HomeScreen() {
     <View style={styles.home}>
       <Text style={ styles.title}>Categories</Text>
       <CategorieList categorie={categories[0]}/>
+      <Text style={ styles.title}>Produits populaires</Text>
+
+
     </View>
   );
 }
@@ -22,7 +25,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   home: {
     backgroundColor: Colors.light.background,
-    flex: 1
   },
   title: { 
     fontSize:20,
