@@ -4,63 +4,97 @@ import { Colors } from "@/src/constants/Colors";
 import Historique from "@/src/components/Historique";
 import { supabase } from "@/src/lib/supabaseClient";
 
-type Order = {
+type OrderItem = {
+  id: number;
+  product_id: number;
+  order_id: number;
+  quantity: number;
+};
+
+type Product = {
   id: number;
   image: string;
+};
+
+type Order = {
+  id: number;
   created_at: string;
   status: string;
   total_price: number;
   user_id: number;
-  order_items: Array<{
-    id: number;
-    product_id: number;
-    order_id: number;
-    quantity: number;
-  }>;
+  order_items: OrderItem[];
+  product_images?: string[]; 
 };
 
 const HistoriquePage = () => {
-    const [orders, setOrders] = useState<Order[]>([]);
-    const [loading, setLoading] = useState(true);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchOrders = async () => {
-            const { data, error } = await supabase
-                .from('orders')
-                .select('*');
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const { data: ordersData, error: ordersError } = await supabase
+        .from('orders')
+        .select('id, created_at, status, total_price, user_id, order_items(product_id)')
+        .order('created_at', { ascending: false });
 
-            if (error) {
-                console.error(error);
-            } else {
-                setOrders(data);
-            }
+      if (ordersError) {
+        console.error(ordersError);
+        setLoading(false);
+        return;
+      }
 
-            setLoading(false);
-        };
+      const productIds = ordersData.flatMap(order =>
+        order.order_items.map(item => item.product_id)
+      );
 
-        fetchOrders();
-    }, []);
+      const { data: productsData, error: productsError } = await supabase
+        .from('products')
+        .select('id, image')
+        .in('id', productIds);
 
-    if (loading) {
-        return <ActivityIndicator size="large" color={Colors.light.background} />;
-    }
+      if (productsError) {
+        console.error(productsError);
+        setLoading(false);
+        return;
+      }
 
-    return (
-        <SafeAreaView  style={styles.container}>
-            <FlatList
-                data={orders}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => <Historique order={item} />}
-            />
-        </SafeAreaView>
-    );
+      const productImages = new Map<number, string>();
+      productsData.forEach(product => {
+        productImages.set(product.id, product.image);
+      });
+
+      const enrichedOrders = ordersData.map(order => {
+        const productImagesForOrder = order.order_items.map(item => productImages.get(item.product_id));
+        return { ...order, product_images: productImagesForOrder };
+      });
+
+      setOrders(enrichedOrders);
+      setLoading(false);
+    };
+
+    fetchOrders();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator size="large" color={Colors.light.background} />;
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={orders}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <Historique order={item} />}
+      />
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: Colors.light.background,
-    },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.light.background,
+  },
 });
 
 export default HistoriquePage;
