@@ -1,19 +1,12 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-
 import { TabBarIcon } from '@/src/components/navigation/TabBarIcon';
 import { Colors } from '@/src/constants/Colors';
-import { useColorScheme } from '@/src/hooks/useColorScheme';
-import Feather from '@expo/vector-icons/Feather';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import TabBar from '../../components/TabBar'
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
 
   return (
     <Tabs
-        tabBar={props => <TabBar {...props} />}
         screenOptions={{
             tabBarActiveTintColor: Colors.light.tintBlue,
         }}>
@@ -24,6 +17,16 @@ export default function TabLayout() {
               tabBarIcon: ({ color, focused }) => (
                 <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
               ),
+            }}
+        />
+        <Tabs.Screen
+            name="(menu)"
+            options={{
+                title: 'Menu',
+                tabBarIcon: ({ color, focused }) => (
+                    <TabBarIcon name={focused ? 'menu' : 'menu-outline'} color={color} />
+                ),
+                headerShown: false
             }}
         />
         <Tabs.Screen

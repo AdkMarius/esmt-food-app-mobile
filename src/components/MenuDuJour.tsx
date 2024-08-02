@@ -1,18 +1,30 @@
 import { Image, StyleSheet, View, Text } from 'react-native';
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/src/constants/Colors";
 import React from 'react';
-import { products } from '../../assets/data/data';
 import CTAGreenButton from "@/src/components/button/CTAGreenButton";
+import {Tables} from "@/src/lib/types";
+import BodyFontHighlight from "@/src/components/typography/BodyFontHighlight";
+import CTABlueButton from "@/src/components/button/CTABlueButton";
 
-const MenuDuJour = ({ product }) => {
+type Props = {
+  product: Tables<'products'>
+};
+
+const MenuDuJour = ({ product }: Props) => {
   return (
     <View style={styles.container}>
         <View style={styles.item}>
-          <Image source={{ uri: product.image }} style={styles.imageproduct} />
-          <Text style={styles.text}>{product.name}</Text>
-          <Text style={styles.text}>{product.price} fcfa</Text>
-          <CTAGreenButton text='Ajouter au panier'/>
+          <Image source={{ uri: product.image as string}} style={styles.imageProduct} />
+
+          <BodyFontHighlight text={product.name} textStyle={{ marginBottom: 10}}/>
+          <View style={{flexDirection: 'row', alignItems: 'center', columnGap: 5}}>
+            <BodyFontHighlight text={product.price.toString()} />
+            <BodyFontHighlight text="fcfa" />
+          </View>
+
+          <CTAGreenButton text='Ajouter au panier' />
+
+          <CTABlueButton text='Commander le menu du jour'/>
         </View>
       
     </View>
@@ -23,20 +35,21 @@ export default MenuDuJour;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: Colors.light.background,
     flexDirection: 'row', 
     justifyContent: 'space-around',
     padding: 20,
     borderRadius: 25,
-
   },
   item: {
-    alignItems: 'center', 
+    alignItems: 'center',
+    rowGap: 10
   },
-  imageproduct: {
-    width: '70%',
+  imageProduct: {
+    width: '50%',
     aspectRatio:1,
-    borderRadius: 110,
+    borderRadius: 100,
     marginBottom: 10, 
   },
   text: {

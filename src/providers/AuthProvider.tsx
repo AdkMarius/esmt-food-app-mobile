@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { storeToken, getToken, deleteToken } from '@/src/lib/secure-store';
 import { storeData, getData } from "@/src/lib/async-storage";
-import {loginUser, getUserDetails, signUpUser} from '@/src/api/products';
+import {loginUser, getUserDetails, signUpUser} from '../api/users/auth';
 import {Alert} from "react-native";
 
 interface Session  {

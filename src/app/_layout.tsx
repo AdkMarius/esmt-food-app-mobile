@@ -8,8 +8,8 @@ import React from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/src/hooks/useColorScheme';
-import React from 'react';
 import {AuthProvider} from "@/src/providers/AuthProvider";
+import QueryProvider from "@/src/providers/QueryProvider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -32,12 +32,14 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={DefaultTheme}>
-      <AuthProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </AuthProvider>
+      <QueryProvider>
+        <AuthProvider>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </AuthProvider>
+      </QueryProvider>
     </ThemeProvider>
   );
 }

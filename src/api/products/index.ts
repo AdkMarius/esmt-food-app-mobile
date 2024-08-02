@@ -2,31 +2,24 @@ import axios from "axios";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
-const registerLogin = async (email: string, password: string, isLogin: boolean) => {
-    const data = {
-        email: email,
-        password: password
-    };
+export const readAllProducts = async () => {
+    try {
+        const response =
+            await axios.get(`${API_URL}/api/products/list`);
 
-    const apiUrl = (isLogin) ?
-        'https://aed4-41-82-9-76.ngrok-free.app/api/auth/sign-in' :
-        'https://aed4-41-82-9-76.ngrok-free.app/api/auth/sign-up';
+        return await response.data;
+    } catch (error) {
 
-    const response = await axios.post(apiUrl, data);
-
-    return await response.data;
+    }
 };
 
-export const loginUser = async (email: string, password: string) => {
-    return registerLogin(email, password, true);
-};
+export const readDayMenu = async () => {
+    try {
+        const response =
+            await axios.get(`${API_URL}/api/products/day-menu`);
 
-export const signUpUser = async (email: string, password: string) => {
-    return registerLogin(email, password, false);
-}
-
-export const getUserDetails = async (id: string) => {
-    const response = await axios.get(`https://aed4-41-82-9-76.ngrok-free.app/api/users/${id}`);
-
-    return await response.data;
+        return await response.data;
+    } catch (error) {
+        console.error(error);
+    }
 }

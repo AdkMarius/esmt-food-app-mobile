@@ -20,7 +20,10 @@ const CTAGreenButton = forwardRef<View | null, ButtonProps>(
 const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.light.tintGreen,
-        padding: 15,
+        paddingLeft: 40,
+        paddingRight: 40,
+        paddingTop: 15,
+        paddingBottom: 15,
         alignItems: 'center',
         borderRadius: 100,
         marginVertical: 10,

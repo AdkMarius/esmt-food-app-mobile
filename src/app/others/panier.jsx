@@ -7,7 +7,7 @@ import CTABlueButton from "@/src/components/button/CTABlueButton";
 import CTAGreenButton from "@/src/components/button/CTAGreenButton";
 import WHITEButton from '@/src/components/button/WHITEButton';
 import {categories, products, orders} from '../../../assets/data/data';
-import CategorieList from '@/src/components/CategorieList';
+import CategorieList from '@/src/components/CategoryList';
 import MenuDuJour from '@/src/components/MenuDuJour';
 import CommandePrecedente from '@/src/components/CommandePrecedente';
 import Historique from '@/src/components/Historique';

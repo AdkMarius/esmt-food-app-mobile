@@ -11,8 +11,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
         menu: (props) =>  <Feather name="menu" size={24}  {...props} />,
         panier: (props) => <Feather name="shopping-cart" size={24}  {...props} />,
         deco: (props) =>  <MaterialIcons name="logout" size={24}  {...props} />,
-    }
-
+    };
 
     const Couleur1 = '#00954A';
     const Couleur2 = '#0F8ACE';
@@ -52,7 +51,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
           return (
             <TouchableOpacity
               key={route.name}
-              style={styles.tabbarItem}
+              style={styles.tabBarItem}
               accessibilityRole="button"
               accessibilityState={isFocused ? { selected: true } : {}}
               accessibilityLabel={options.tabBarAccessibilityLabel}
@@ -93,7 +92,7 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         shadowOpacity: 0.1,
     },
-    tabbarItem:{
+    tabBarItem:{
         flex: 1,
         justifyContent:'center',
         alignItems: 'center',
