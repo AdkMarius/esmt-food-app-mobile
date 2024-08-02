@@ -39,6 +39,16 @@ export default function TabLayout() {
                 headerShown: false
             }}
         />
+        <Tabs.Screen
+            name="(historique)"
+            options={{
+                title: 'Historique',
+                tabBarIcon: ({ color, focused }) => (
+                    <TabBarIcon name={focused ? 'log-in' : 'log-in-outline'} color={color} />
+                ),
+                headerShown: false
+            }}
+        />
     </Tabs>
   );
 }

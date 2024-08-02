@@ -4,17 +4,39 @@ import { Colors } from "@/src/constants/Colors";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-const Historique = ({ order }) => {
+type Order = {
+  id: number;
+  image: string;
+  created_at: string;
+  status: string;
+  total_price: number;
+  user_id: number;
+  order_items: Array<{
+    id: number;
+    product_id: number;
+    order_id: number;
+    quantity: number;
+  }>;
+};
+
+type HistoriqueProps = {
+  order: Order;
+};
+
+const Historique: React.FC<HistoriqueProps> = ({ order }) => {
   return (
     <View style={styles.container}>
-      <Image source={{ uri: order.image }} style={styles.imageorder} />
+      {order.image && <Image source={{ uri: order.image }} style={styles.imageorder} />}
       <View style={styles.textContainer}>
         <View style={styles.topRightIconContainer}>
           <FontAwesome name="trash-o" size={24} color="lightblue" />
         </View>
         <Text style={styles.text}>Commande #{order.id}</Text>
         <View style={styles.dateContainer}>
-          <Text style={styles.date}>{order.created_at}</Text>
+          <Text style={styles.date}>{new Date(order.created_at).toLocaleString()}</Text>
+        </View>
+        <View style={styles.dateContainer}>
+          <Text style={styles.status}>Status : {order.status}</Text>
         </View>
         <View style={styles.iconsContainer}>
           <AntDesign name="eye" size={20} color="lightblue" style={styles.icon} />
@@ -35,6 +57,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 25,
     position: 'relative',
+    marginBottom: 10,
   },
   imageorder: {
     width: 100,
@@ -73,5 +96,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: 10,
+  },
+  status: {
+    fontSize: 13,
+    marginBottom: 10,
+    color: "green",
   },
 });
