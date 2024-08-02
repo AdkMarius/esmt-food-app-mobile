@@ -25,15 +25,18 @@ const Historique: React.FC<HistoriqueProps> = ({ order }) => {
       )}
       <View style={styles.textContainer}>
         <View style={styles.topRightIconContainer}>
-          <FontAwesome name="trash-o" size={24} color="lightblue" />
+          <FontAwesome name="trash-o" size={24} color="#0F8ACE" />
         </View>
         <Text style={styles.text}>Commande #{order.id}</Text>
         <View style={styles.dateContainer}>
           <Text style={styles.date}>{new Date(order.created_at).toLocaleString()}</Text>
         </View>
+        <View>
+          <Text style={styles.status}>Status : {order.status}</Text>
+        </View>
         <View style={styles.iconsContainer}>
-          <AntDesign name="eye" size={20} color="lightblue" style={styles.icon} />
-          <AntDesign name="star" size={20} color="lightblue" style={styles.icon} />
+          <AntDesign name="eye" size={20} color="#0F8ACE" style={styles.icon} />
+          <AntDesign name="star" size={20} color="#0F8ACE" style={styles.icon} />
         </View>
       </View>
     </View>
@@ -88,5 +91,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: 10,
+  },
+  status: {
+    fontSize: 13,
+    marginBottom: 10,
+    color:'#00954A',
   },
 });
