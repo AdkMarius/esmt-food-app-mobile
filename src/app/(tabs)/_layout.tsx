@@ -4,12 +4,16 @@ import React from 'react';
 import { TabBarIcon } from '@/src/components/navigation/TabBarIcon';
 import { Colors } from '@/src/constants/Colors';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
+import Feather from '@expo/vector-icons/Feather';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import TabBar from '../../components/TabBar'
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <Tabs
+        tabBar={props => <TabBar {...props} />}
         screenOptions={{
             tabBarActiveTintColor: Colors.light.tintBlue,
         }}>
