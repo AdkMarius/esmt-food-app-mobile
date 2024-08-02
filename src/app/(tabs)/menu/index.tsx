@@ -1,5 +1,5 @@
 import React from "react";
-import {SectionList, Image, Pressable, StyleSheet, View, FlatList, ActivityIndicator} from "react-native";
+import {SectionList, Image, Pressable, StyleSheet, View} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import TitleFont from "@/src/components/typography/TitleFont";
 import CategoryList from "@/src/components/CategoryList";
@@ -7,15 +7,13 @@ import MenuDuJour from "@/src/components/MenuDuJour";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/src/constants/Colors";
 import useDayMenu from "@/src/hooks/useDayMenu";
-import { readAllProducts } from "@/src/api/products";
-import { Tables } from "@/src/lib/types";
 import BodyFontHighlight from "@/src/components/typography/BodyFontHighlight";
-import Product from "@/src/components/Product";
-import {Stack} from "expo-router";
-import {useQuery} from "@tanstack/react-query";
+import {Stack, useRouter} from "expo-router";
 import ProductList from "@/src/components/ProductList";
 
 const MenuScreen = () => {
+    const router = useRouter();
+
     const { data: dayMenu } = useDayMenu();
 
     const sections = [
@@ -38,7 +36,7 @@ const MenuScreen = () => {
                     <Pressable style={styles.icon}>
                         <FontAwesome name='bell' size={24} />
                     </Pressable>
-                    <Pressable style={styles.icon}>
+                    <Pressable style={styles.icon} onPress={() => {router.push('/settings')}}>
                         <FontAwesome name='gear' size={24} />
                     </Pressable>
                 </View>
@@ -68,6 +66,7 @@ const MenuScreen = () => {
                 }}
                 ListFooterComponent={<ProductList />}
                 contentContainerStyle={styles.sectionList}
+                showsVerticalScrollIndicator={false}
             />
         </SafeAreaView>
     );
@@ -77,10 +76,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.light.background,
+        padding: 15
     },
     sectionList: {
         gap: 20,
-        padding: 20
     },
     section: {
         marginBottom: 20,

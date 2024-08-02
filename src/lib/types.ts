@@ -37,6 +37,7 @@ export type Evaluation = {
 
 export type CartItem = {
   id: string;
+  product: Tables<'products'>;
   product_id: number;
   quantity: number;
 };

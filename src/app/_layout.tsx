@@ -10,6 +10,7 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
 import {AuthProvider} from "@/src/providers/AuthProvider";
 import QueryProvider from "@/src/providers/QueryProvider";
+import CartProvider from "@/src/providers/CardProvider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -34,10 +35,12 @@ export default function RootLayout() {
     <ThemeProvider value={DefaultTheme}>
       <QueryProvider>
         <AuthProvider>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
+          <CartProvider>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </CartProvider>
         </AuthProvider>
       </QueryProvider>
     </ThemeProvider>

@@ -22,4 +22,15 @@ export const readDayMenu = async () => {
     } catch (error) {
         console.error(error);
     }
-}
+};
+
+export const readProductById = async (id : number) => {
+    try {
+        const response =
+            await axios.get(`${API_URL}/api/products/${id}`);
+
+        return await response.data;
+    } catch (error) {
+        console.error(error);
+    }
+};

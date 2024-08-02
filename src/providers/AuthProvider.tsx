@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { storeToken, getToken, deleteToken } from '@/src/lib/secure-store';
-import { storeData, getData } from "@/src/lib/async-storage";
+import { storeId, getId } from "@/src/lib/async-storage";
 import {loginUser, getUserDetails, signUpUser} from '../api/users/auth';
 import {Alert} from "react-native";
 
 interface Session  {
     id: string | null,
+    email: string | null,
     token: string | null
 }
 
@@ -13,8 +14,8 @@ interface AuthContextProps {
     session:  Session | null;
     loading: boolean;
     profile: any;
-    signIn: (email: string, password: string) => Promise<boolean>;
-    signUp: (email: string, password: string) => Promise<boolean>;
+    signIn: (email: string, password: string) => Promise<boolean | undefined>;
+    signUp: (email: string, password: string) => Promise<boolean | undefined>;
     signOut: () => void;
 }
 
@@ -40,45 +41,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [loading, setLoading] = useState(true);
     const [profile, setProfile] = useState(null);
 
-    // useEffect(() => {
-    //     const loadData = async () => {
-    //         const token = await getToken();
-    //
-    //         const id = await getData();
-    //
-    //         const userSession: Session = {
-    //             id: id,
-    //             token: token
-    //         };
-    //
-    //         if (userSession) {
-    //             setSession(userSession);
-    //
-    //             const data = await getUserDetails(userSession.id as string);
-    //
-    //             setProfile(data);
-    //         }
-    //         setLoading(false);
-    //     };
-    //
-    //     loadData();
-    // }, []);
-
     const storeUserInfos = async (data, error) => {
 
         await storeToken(data.session.access_token);
 
-        await storeData(data.session.user.id);
+        await storeId(data.user.id);
 
-        setSession({ id: data.session.user.id, token: data.session.access_token });
+        setSession({ id: data.session.user.id, email: data.session.user.email, token: data.session.access_token });
 
-        const userDetails = await getUserDetails(session?.id as string);
+        const userDetails = await getUserDetails(data.session.user.id as string);
 
         setProfile(userDetails.data[0]);
-
-        console.log('Session token', session?.token);
-        console.log('Session id', session?.id);
-        console.log(profile);
 
         setLoading(false);
 
@@ -96,6 +69,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
             return await storeUserInfos(data, error);
         } catch (error) {
+            console.error(error);
             Alert.alert('Error', 'Veuillez réessayer svp.');
         }
     };

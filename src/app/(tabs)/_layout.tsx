@@ -2,8 +2,10 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { TabBarIcon } from '@/src/components/navigation/TabBarIcon';
 import { Colors } from '@/src/constants/Colors';
+import {useAuth} from "@/src/providers/AuthProvider";
 
 export default function TabLayout() {
+    const { session } = useAuth();
 
   return (
     <Tabs
@@ -20,7 +22,7 @@ export default function TabLayout() {
             }}
         />
         <Tabs.Screen
-            name="(menu)"
+            name="menu"
             options={{
                 title: 'Menu',
                 tabBarIcon: ({ color, focused }) => (
@@ -30,15 +32,38 @@ export default function TabLayout() {
             }}
         />
         <Tabs.Screen
-            name="(auth)"
+            name="cart"
             options={{
-                title: 'Auth',
+                title: 'Cart',
                 tabBarIcon: ({ color, focused }) => (
-                    <TabBarIcon name={focused ? 'log-in' : 'log-in-outline'} color={color} />
+                    <TabBarIcon name={focused ? 'cart' : 'cart-outline'} color={color} />
                 ),
                 headerShown: false
             }}
         />
+        { session ? (
+            <Tabs.Screen
+                name="auth"
+                options={{
+                    title: 'Sign-in',
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon name={focused ? 'log-in' : 'log-in-outline'} color={color} />
+                    ),
+                    headerShown: false
+                }}
+            />
+        ) : (
+            <Tabs.Screen
+                name="auth"
+                options={{
+                    title: 'Sign-in',
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon name={focused ? 'log-in' : 'log-in-outline'} color={color} />
+                    ),
+                    headerShown: false
+                }}
+            />
+        )}
     </Tabs>
   );
 }

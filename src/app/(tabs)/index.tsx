@@ -1,7 +1,6 @@
 import {Image, StyleSheet, Platform, View, Text, ScrollView, Pressable} from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/src/constants/Colors";
-import CTABlueButton from "@/src/components/button/CTABlueButton";
 import React from 'react';
 import CategoryList from '@/src/components/CategoryList';
 import MenuDuJour from '@/src/components/MenuDuJour';
@@ -10,11 +9,11 @@ import TitleFont from "@/src/components/typography/TitleFont";
 import {FontAwesome} from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import useDayMenu from "@/src/hooks/useDayMenu";
-import { Stack } from 'expo-router';
-import {Tables} from "@/src/lib/types";
+import {Stack, useRouter} from 'expo-router';
 
 export default function HomeScreen() {
-    const { data: dayMenu} = useDayMenu();
+  const router = useRouter();
+  const { data: dayMenu} = useDayMenu();
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
@@ -30,13 +29,13 @@ export default function HomeScreen() {
                 <Pressable style={styles.icon}>
                     <FontAwesome name='bell' size={24} />
                 </Pressable>
-                <Pressable style={styles.icon}>
+                <Pressable style={styles.icon} onPress={() => {router.push('/settings')}}>
                     <FontAwesome name='gear' size={24} />
                 </Pressable>
             </View>
         </View>
 
-        <ScrollView style={styles.home}>
+        <ScrollView style={styles.home} showsVerticalScrollIndicator={false}>
             <View style={styles.section}>
                 <TitleFont text="Categories" />
                 <CategoryList />

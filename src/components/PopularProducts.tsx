@@ -7,7 +7,7 @@ import {readAllProducts} from "@/src/api/products";
 const PopularProducts = () => {
 
     return (
-        <ScrollView horizontal={true}>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={styles.container}>
                 <Product />
                 <Product />

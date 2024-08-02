@@ -9,7 +9,7 @@ type ProductProps = {
 }
 
 const product: Tables<'products'> = {
-    id: 1,
+    id: 3,
     created_at: "",
     name: "Tchep poulet",
     price: 1500,
@@ -22,7 +22,7 @@ const product: Tables<'products'> = {
 const Product = ( { item }: ProductProps) => {
     if (item) {
         return (
-            <Link href='' asChild>
+            <Link href={`/menu/${item.id}`} asChild>
                 <Pressable style={styles.container}>
                     <Image source={{ uri: item.image as string}} style={styles.image} />
 
@@ -36,7 +36,7 @@ const Product = ( { item }: ProductProps) => {
     }
 
     return (
-        <Link href='' asChild>
+        <Link href={`/menu/${product.id}`} asChild>
             <Pressable style={styles.container}>
                 <Image source={{ uri: product.image as string}} style={styles.image} />
 

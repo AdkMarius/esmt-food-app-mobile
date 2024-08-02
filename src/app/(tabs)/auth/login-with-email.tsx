@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {Image, Pressable, StyleSheet, TextInput, View} from "react-native";
+import {ActivityIndicator, Image, Pressable, StyleSheet, TextInput, View} from "react-native";
 import {Stack, useRouter} from "expo-router";
 import HeaderFont from "@/src/components/typography/HeaderFont";
 import {FontAwesome} from "@expo/vector-icons";
@@ -15,6 +15,7 @@ const LoginWithEmail = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
 
     const login = async () => {
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -33,9 +34,15 @@ const LoginWithEmail = () => {
             setError("");
         }
 
+        setLoading(true);
+
         const isOkay = await signIn(email, password);
 
-        if (isOkay) router.navigate('/')
+        if (isOkay) {
+            router.navigate('/')
+            setLoading(false);
+        }
+
     }
 
     return (
@@ -80,10 +87,14 @@ const LoginWithEmail = () => {
             <BodyFont text={error} textStyle={{ color: 'red', marginTop: 20, paddingLeft: 10}} />
 
             <View style={{ marginVertical: 'auto' }}>
-                <CTABlueButton
-                    text="Se connecter"
-                    onPress={login}
-                />
+                { loading ? (
+                    <ActivityIndicator />
+                ) : (
+                    <CTABlueButton
+                        text="Se connecter"
+                        onPress={login}
+                    />
+                )}
             </View>
 
         </SafeAreaView>
