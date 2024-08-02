@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, ActivityIndicator, FlatList } from "react-nat
 import { Colors } from "@/src/constants/Colors";
 import Historique from "@/src/components/Historique";
 import { supabase } from "@/src/lib/supabaseClient";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 type OrderItem = {
   id: number;
@@ -27,7 +27,7 @@ type Order = {
   product_images?: string[];
 };
 
-const HistoriquePage = () => {
+const Favoris = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -88,7 +88,7 @@ const HistoriquePage = () => {
         renderItem={({ item }) => (
           <Historique 
             order={item} 
-            icon={<AntDesign name="star" size={20} color="#0F8ACE" style={styles.icon} />}
+            icon={<MaterialIcons name="drive-file-rename-outline" size={24} color="#0F8ACE" style={styles.icon} />}
           />
         )}
       />
@@ -106,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HistoriquePage;
+export default Favoris;

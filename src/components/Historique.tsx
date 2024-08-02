@@ -2,6 +2,7 @@ import { Image, StyleSheet, View, Text } from 'react-native';
 import React from 'react';
 import { Colors } from "@/src/constants/Colors";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 type Order = {
@@ -10,14 +11,15 @@ type Order = {
   status: string;
   total_price: number;
   user_id: number;
-  product_images?: string[]; 
+  product_images?: string[];
 };
 
 type HistoriqueProps = {
   order: Order;
+  icon: JSX.Element;
 };
 
-const Historique: React.FC<HistoriqueProps> = ({ order }) => {
+const Historique: React.FC<HistoriqueProps> = ({ order, icon }) => {
   return (
     <View style={styles.container}>
       {order.product_images && order.product_images.length > 0 && (
@@ -36,7 +38,7 @@ const Historique: React.FC<HistoriqueProps> = ({ order }) => {
         </View>
         <View style={styles.iconsContainer}>
           <AntDesign name="eye" size={20} color="#0F8ACE" style={styles.icon} />
-          <AntDesign name="star" size={20} color="#0F8ACE" style={styles.icon} />
+          {icon}
         </View>
       </View>
     </View>
@@ -95,6 +97,6 @@ const styles = StyleSheet.create({
   status: {
     fontSize: 13,
     marginBottom: 10,
-    color:'#00954A',
+    color: '#00954A',
   },
 });

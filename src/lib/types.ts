@@ -56,6 +56,7 @@ export type Order = {
   user_id: number;
   status: OrderStatus;
   order_items?: OrderItem[];
+  
 };
 
 export type OrderItem = {
