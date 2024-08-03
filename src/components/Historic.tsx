@@ -4,6 +4,7 @@ import { Colors } from "@/src/constants/Colors";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import BodyFontSmall from "@/src/components/typography/BodyFontSmall";
 
 type Order = {
   id: number;
@@ -19,7 +20,7 @@ type HistoriqueProps = {
   icon: JSX.Element;
 };
 
-const Historique: React.FC<HistoriqueProps> = ({ order, icon }) => {
+const Historic: React.FC<HistoriqueProps> = ({ order, icon }) => {
   return (
     <View style={styles.container}>
       {order.product_images && order.product_images.length > 0 && (
@@ -29,23 +30,23 @@ const Historique: React.FC<HistoriqueProps> = ({ order, icon }) => {
         <View style={styles.topRightIconContainer}>
           <FontAwesome name="trash-o" size={24} color="#0F8ACE" />
         </View>
-        <Text style={styles.text}>Commande #{order.id}</Text>
+        <BodyFontSmall text={`Commande #${order.id}`} textStyle={styles.text} />
         <View style={styles.dateContainer}>
-          <Text style={styles.date}>{new Date(order.created_at).toLocaleString()}</Text>
+          <BodyFontSmall text={new Date(order.created_at).toLocaleString()} textStyle={styles.text} />
         </View>
-        <View>
-          <Text style={styles.status}>Status : {order.status}</Text>
-        </View>
-        <View style={styles.iconsContainer}>
-          <AntDesign name="eye" size={20} color="#0F8ACE" style={styles.icon} />
-          {icon}
+        <View style={styles.bottomContainer}>
+          <BodyFontSmall text={`Status : ${order.status}`} textStyle={styles.status}/>
+          <View style={styles.iconsContainer}>
+            <AntDesign name="eye" size={20} color="#0F8ACE" style={styles.icon} />
+            {icon}
+          </View>
         </View>
       </View>
     </View>
   );
 };
 
-export default Historique;
+export default Historic;
 
 const styles = StyleSheet.create({
   container: {
@@ -53,7 +54,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     padding: 20,
-    borderRadius: 25,
+    borderRadius: 10,
+    borderColor: '#f4f4f4',
+    borderWidth: 1,
     position: 'relative',
   },
   imageorder: {
@@ -73,7 +76,6 @@ const styles = StyleSheet.create({
     right: 0,
   },
   text: {
-    fontSize: 13,
     marginBottom: 10,
   },
   dateContainer: {
@@ -81,9 +83,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  date: {
-    fontSize: 13,
-    marginBottom: 10,
+  bottomContainer: {
+    justifyContent: 'center'
   },
   iconsContainer: {
     flexDirection: 'row',

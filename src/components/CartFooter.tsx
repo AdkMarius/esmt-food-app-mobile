@@ -1,50 +1,33 @@
-import {FlatList, StyleSheet, View, Text} from "react-native";
+import {FlatList, StyleSheet, View, Text, Alert} from "react-native";
 import React from "react";
 import PriceComponent from "@/src/components/PriceComponent";
 import {useState, useMemo} from "react";
-import RadioGroup, {RadioButtonProps} from 'react-native-radio-buttons-group';
+import CTABlueButton from "@/src/components/button/CTABlueButton";
+import {useAuth} from "@/src/providers/AuthProvider";
+import {useCart} from "@/src/providers/CardProvider";
 
 type Props = {
     price: string;
+    onPress: () => Promise<void | null>;
 }
 const CartFooter = (props: Props) => {
     const {
-        price
+        price,
+        onPress
     } = props;
-
-    const radioButtons: RadioButtonProps[] = useMemo(() => ([
-        {
-            id: '1', // acts as primary key, should be unique and non-empty string
-            label: 'Option 1',
-            value: 'option1'
-        },
-        {
-            id: '2',
-            label: 'Option 2',
-            value: 'option2'
-        }
-    ]), []);
 
     const [selectedId, setSelectedId] = useState<string | undefined>();
 
     return (
-        <View style={styles.products}>
+        <View style={{ marginTop: 20}}>
             <PriceComponent price={price} />
 
-            <RadioGroup
-                radioButtons={radioButtons}
-                onPress={setSelectedId}
-                selectedId={selectedId}
+            <CTABlueButton
+                text="Passer au paiement"
+                onPress={onPress}
             />
-
         </View>
     );
-}
-
-const styles = StyleSheet.create({
-    products: {
-        rowGap: 20
-    }
-});
+};
 
 export default CartFooter;

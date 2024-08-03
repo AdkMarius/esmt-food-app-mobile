@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, ActivityIndicator, FlatList } from "react-native";
+import {SafeAreaView, StyleSheet, ActivityIndicator, FlatList, Alert} from "react-native";
 import { Colors } from "@/src/constants/Colors";
-import Historique from "@/src/components/Historique";
+import Historic from "@/src/components/Historic";
 import { supabase } from "@/src/lib/supabaseClient";
 import AntDesign from '@expo/vector-icons/AntDesign';
+import {useQuery} from "@tanstack/react-query";
+import {useAuth} from "@/src/providers/AuthProvider";
+import UserNotLogin from "@/src/components/UserNotLogin";
+import {readAllUserOrders} from "@/src/api/orders";
+import {useInsertOrderListener} from "@/src/api/orders/subscription";
 
 type OrderItem = {
   id: number;
@@ -27,21 +32,38 @@ type Order = {
   product_images?: string[];
 };
 
-const HistoriquePage = () => {
+const HistoricScreen = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const { session } = useAuth();
+
+  useInsertOrderListener();
+
+  const { data: ordersData, error} = useQuery({
+    queryKey: ['orders'],
+    queryFn: async () => {
+      const res = await readAllUserOrders(session?.id as string);
+      return res.data;
+    }
+  })
+
   useEffect(() => {
     const fetchOrders = async () => {
-      const { data: ordersData, error: ordersError } = await supabase
-        .from('orders')
-        .select('id, created_at, status, total_price, user_id, order_items(product_id)')
-        .order('created_at', { ascending: false });
+      // const { data: ordersData, error: ordersError } = await supabase
+      //   .from('orders')
+      //   .select('id, created_at, status, total_price, user_id, order_items(product_id)')
+      //   .eq('user_id', session?.id)
+      //   .order('created_at', { ascending: false });
+      //
+      // if (ordersError) {
+      //   console.error(ordersError);
+      //   setLoading(false);
+      //   return;
+      // }
 
-      if (ordersError) {
-        console.error(ordersError);
-        setLoading(false);
-        return;
+      if (!ordersData) {
+        return <ActivityIndicator />
       }
 
       const productIds = ordersData.flatMap(order =>
@@ -80,13 +102,21 @@ const HistoriquePage = () => {
     return <ActivityIndicator size="large" color={Colors.light.background} />;
   }
 
+  if (!session) {
+    return (
+        <SafeAreaView style={styles.container}>
+          <UserNotLogin />
+        </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         data={orders}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <Historique 
+          <Historic
             order={item} 
             icon={<AntDesign name="star" size={20} color="#0F8ACE" style={styles.icon} />}
           />
@@ -106,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HistoriquePage;
+export default HistoricScreen;

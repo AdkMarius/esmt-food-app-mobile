@@ -13,20 +13,15 @@ const registerLogin = async (email: string, password: string, isLogin: boolean) 
         `${API_URL}/api/auth/sign-in` :
         `${API_URL}/api/auth/sign-up`;
 
-    try {
-        const response = await axios.post(apiUrl, data);
-        console.log(response.status);
-         if (response.status === 400 || response.status === 500) {
-             Alert.alert('Error', 'Veuillez entrer un email et un mot de passe valide');
-         }
-
-         if (response.status === 200)
-            return await response.data;
-
-         return null;
-    } catch (error) {
-        Alert.alert('Error', 'Veuillez rééssayer svp');
+    const response = await axios.post(apiUrl, data);
+    if (response.status === 400 || response.status === 500) {
+        Alert.alert('Error', 'Veuillez entrer un email et un mot de passe valide');
     }
+
+    if (response.status === 200)
+        return await response.data;
+
+    return null;
 
 };
 

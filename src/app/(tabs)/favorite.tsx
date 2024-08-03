@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, ActivityIndicator, FlatList } from "react-native";
+import {StyleSheet, ActivityIndicator, FlatList, Pressable, View} from "react-native";
 import { Colors } from "@/src/constants/Colors";
-import Historique from "@/src/components/Historique";
+import Historic from "@/src/components/Historic";
 import { supabase } from "@/src/lib/supabaseClient";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import {Stack, useRouter} from "expo-router";
+import {useAuth} from "@/src/providers/AuthProvider";
+import {FontAwesome} from "@expo/vector-icons";
+import UserNotLogin from "@/src/components/UserNotLogin";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type OrderItem = {
   id: number;
@@ -31,11 +36,32 @@ const Favoris = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const router = useRouter();
+  const { session, profile , signOut } = useAuth();
+
+  if (!session) {
+    return (
+        <SafeAreaView edges={['top']} style={styles.container}>
+          <Stack.Screen
+              options={{
+                headerShown: false
+              }}
+          />
+          <Pressable style={styles.iconHeader} onPress={() => {router.back()}}>
+            <FontAwesome name='arrow-left' size={24} />
+          </Pressable>
+
+          <UserNotLogin />
+        </SafeAreaView>
+    );
+  }
+
   useEffect(() => {
     const fetchOrders = async () => {
       const { data: ordersData, error: ordersError } = await supabase
         .from('orders')
         .select('id, created_at, status, total_price, user_id, order_items(product_id)')
+        .eq('user_id', session?.id)
         .order('created_at', { ascending: false });
 
       if (ordersError) {
@@ -86,11 +112,12 @@ const Favoris = () => {
         data={orders}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <Historique 
+          <Historic
             order={item} 
             icon={<MaterialIcons name="drive-file-rename-outline" size={24} color="#0F8ACE" style={styles.icon} />}
           />
         )}
+        contentContainerStyle={{ gap: 20 }}
       />
     </SafeAreaView>
   );
@@ -100,9 +127,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.light.background,
+    padding: 15
   },
   icon: {
     marginLeft: 10,
+  },
+  iconHeader: {
+    width: 48,
+    aspectRatio: 1,
+    backgroundColor: '#f4f4f4',
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 100,
+    marginBottom: 20
   },
 });
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {SectionList, Image, Pressable, StyleSheet, View} from "react-native";
+import {SectionList, Image, Pressable, StyleSheet, View, Platform, Alert} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import TitleFont from "@/src/components/typography/TitleFont";
 import CategoryList from "@/src/components/CategoryList";
@@ -10,6 +10,8 @@ import useDayMenu from "@/src/hooks/useDayMenu";
 import BodyFontHighlight from "@/src/components/typography/BodyFontHighlight";
 import {Stack, useRouter} from "expo-router";
 import ProductList from "@/src/components/ProductList";
+import PopularProducts from "@/src/components/PopularProducts";
+import {StatusBar} from "expo-status-bar";
 
 const MenuScreen = () => {
     const router = useRouter();
@@ -18,6 +20,7 @@ const MenuScreen = () => {
 
     const sections = [
         { title: 'Categories', data: [{ key: 'categories' }] },
+        { title: 'Produits populaires', data: [{ key: 'popular'}]},
         { title: 'Menu du jour', data: [{ key: 'dayMenu' }] },
     ];
 
@@ -54,6 +57,8 @@ const MenuScreen = () => {
                     switch (section.title) {
                         case 'Categories':
                             return <CategoryList />;
+                        case 'Produits populaires':
+                            return <PopularProducts />;
                         case 'Menu du jour':
                             return dayMenu ? (
                                 <MenuDuJour product={dayMenu} />
@@ -68,6 +73,8 @@ const MenuScreen = () => {
                 contentContainerStyle={styles.sectionList}
                 showsVerticalScrollIndicator={false}
             />
+
+            <StatusBar style={Platform.OS === 'ios' ? 'black' : 'light'} />
         </SafeAreaView>
     );
 };

@@ -39,6 +39,8 @@ const LoginWithEmail = () => {
         const isOkay = await signIn(email, password);
 
         if (isOkay) {
+            setEmail('');
+            setPassword('');
             router.navigate('/')
             setLoading(false);
         }

@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {CheckoutData} from "@/src/lib/types";
 
 export const storeId = async (id: string) => {
     try {

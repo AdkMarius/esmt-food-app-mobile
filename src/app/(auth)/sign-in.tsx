@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Image} from "react-native";
+import {Text, View, StyleSheet, Image} from "react-native";
 import HeaderFont from "@/src/components/typography/HeaderFont";
 import {Link, Stack, useRouter} from "expo-router";
 import { Colors } from "@/src/constants/Colors";
@@ -8,7 +8,8 @@ import WHITEButton from "@/src/components/button/WHITEButton";
 import CTABlueButton from "@/src/components/button/CTABlueButton";
 import HorizontalLine from "@/src/components/HorizontalLine";
 import BodyFontSmall from "@/src/components/typography/BodyFontSmall";
-const SignUpScreen = () => {
+
+const SignInScreen = () => {
     const router = useRouter();
 
     return (
@@ -19,27 +20,30 @@ const SignUpScreen = () => {
                 }}
             />
             <View style={styles.header}>
-                <HeaderFont text="Créer un compte" />
+                <HeaderFont text="Se connecter" />
             </View>
 
-            <Image source={require('@/assets/images/sign-up-screen.png')} style={styles.image}/>
+            <Image source={require('@/assets/images/login-screen.png')} style={styles.image}/>
 
             <View style={styles.loginButtons}>
-                <WHITEButton title="Créer un compte avec Google" icon="google" />
-                <WHITEButton title="Créer un compte avec Apple" icon="apple" />
+                <WHITEButton title="Se connecter avec Google" icon="google" />
+                <WHITEButton title="Se connecter avec Apple" icon="apple" />
             </View>
 
             <HorizontalLine />
 
-            <CTABlueButton
-                text="Créer un compte avec email"
-                onPress={() => {router.push('/auth/create-account')}}
-            />
+            <CTABlueButton text="Se connecter avec email" onPress={() => {router.push('/login-with-email')}} />
 
-            <View style={styles.bottomText}>
-                <BodyFontSmall text="Avez-vous déjà un compte ?" />
-                <Link href="/auth/sign-in">
-                    <BodyFontSmall text="Connectez-vous" textStyle={styles.createAccount} />
+            <View style={styles.bottomContainer}>
+                <View style={styles.bottomText}>
+                    <BodyFontSmall text="Pas encore de compte ?" />
+                    <Link href="/sign-up">
+                        <BodyFontSmall text="Créer un compte" textStyle={styles.createAccount} />
+                    </Link>
+                </View>
+
+                <Link href='/menu'>
+                    <BodyFontSmall text="Continuer sans vous connecter" textStyle={styles.createAccount}/>
                 </Link>
             </View>
         </SafeAreaView>
@@ -53,8 +57,16 @@ const styles = StyleSheet.create({
         padding: 15,
     },
     header: {
-        alignItems: 'center',
-        justifyContent: "flex-start",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    icon: {
+        width: 32,
+        aspectRatio: 1,
+        backgroundColor: '#f4f4f4',
+        justifyContent: 'center',
+        borderRadius: 100,
+        alignItems: 'center'
     },
     image: {
         width: '100%',
@@ -69,12 +81,17 @@ const styles = StyleSheet.create({
     bottomText: {
         flexDirection: 'row',
         columnGap: 5,
-        marginVertical: 'auto',
         justifyContent: "center"
+    },
+    bottomContainer: {
+        marginVertical: 'auto',
+        justifyContent: "center",
+        alignItems: 'center',
+        rowGap: 20
     },
     createAccount: {
         color: Colors.light.tintBlue
     }
 })
 
-export default SignUpScreen;
+export default SignInScreen;

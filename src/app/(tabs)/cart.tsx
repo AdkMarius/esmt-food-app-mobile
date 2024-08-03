@@ -1,38 +1,44 @@
-import React from "react";
-import {View, Text, StyleSheet, FlatList, Pressable, ScrollView} from "react-native";
+import React, {useEffect, useState} from "react";
+import {View, StyleSheet, FlatList, Pressable, Alert} from "react-native";
 import {Stack, useRouter} from "expo-router";
 import {Colors} from "@/src/constants/Colors";
 import {useCart} from "@/src/providers/CardProvider";
 import CartItemComponent from "@/src/components/CartItemComponent";
 import { SafeAreaView} from "react-native-safe-area-context";
-import {FontAwesome} from "@expo/vector-icons";
-import HeaderFont from "@/src/components/typography/HeaderFont";
-import TitleFont from "@/src/components/typography/TitleFont";
 import CartFooter from "@/src/components/CartFooter";
+import {useAuth} from "@/src/providers/AuthProvider";
 
 const CartScreen = () => {
-    const { items, checkout, total_price } = useCart();
+    const { items, checkout, total_price, passOrder} = useCart();
 
     const router = useRouter();
+
+    const { session, balance, updateBalance} = useAuth();
+
+    const makePayment = async (): Promise<null | void> => {
+        if (!session) {
+            Alert.alert('Error', 'Veuillez vous authentifier pour continuer');
+            router.navigate('/sign-in');
+            return null;
+        }
+
+        if (balance < total_price) {
+            Alert.alert('Error', 'Solde insuffisant');
+            return null;
+        }
+
+        const isOkay = await passOrder(balance - total_price);
+
+        if (isOkay) {
+            checkout();
+        }
+        else return Alert.alert('Error', 'Veuillez réessayer svp');
+    }
 
     return (
         <SafeAreaView edges={['top']} style={styles.container}>
 
-            <Stack.Screen
-                options={{
-                    headerShown: false
-                }}
-            />
-
-            <View style={styles.header}>
-                <Pressable style={styles.icon} onPress={() => {router.back()}}>
-                    <FontAwesome name='arrow-left' size={24} />
-                </Pressable>
-                <HeaderFont textStyle={styles.headerText} text="Mon Panier" />
-            </View>
-
             <View style={styles.products}>
-                <TitleFont text="Produits" />
 
                 <FlatList
                     data={items}
@@ -41,6 +47,7 @@ const CartScreen = () => {
                     ListFooterComponent={
                         <CartFooter
                             price={total_price.toString()}
+                            onPress={makePayment}
                         />
                 }
                 />

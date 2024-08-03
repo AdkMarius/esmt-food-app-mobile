@@ -6,7 +6,7 @@ import HeaderFont from "@/src/components/typography/HeaderFont";
 import {useAuth} from "@/src/providers/AuthProvider";
 import UserNotLogin from "@/src/components/UserNotLogin";
 import {FontAwesome} from "@expo/vector-icons";
-import {Stack, useRouter} from "expo-router";
+import {Link, Stack, useRouter} from "expo-router";
 import BodyFontHighlight from "@/src/components/typography/BodyFontHighlight";
 import BodyFont from "@/src/components/typography/BodyFont";
 import TitleFont from "@/src/components/typography/TitleFont";
@@ -14,15 +14,18 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 
 type ItemProps = {
     icon: ReactNode,
-    title: string
+    title: string,
+    url: string
 };
 
-const Item = ({ icon, title}: ItemProps) => {
+const Item = ({ icon, title, url}: ItemProps) => {
     return (
-      <View style={styles.itemContainer}>
-          { icon }
-          <BodyFontHighlight text={title} />
-      </View>
+        <Link href={url}>
+            <View style={styles.itemContainer}>
+                { icon }
+                <BodyFontHighlight text={title} />
+            </View>
+        </Link>
     );
 }
 
@@ -49,27 +52,24 @@ const SettingsScreen = () => {
 
     const settingsData: ItemProps[] = [
         {
-            icon: <FontAwesome name="list" size={24} />,
-            title: 'Historique des commandes'
+            icon: <FontAwesome name="list" size={24} onPress={() => {router.navigate('/historic')}}/>,
+            title: 'Historic des commandes',
+            url: '/historic'
         },
         {
-            icon: <FontAwesome name="heart" size={24} />,
-            title: 'Commandes favorites'
+            icon: <FontAwesome name="heart" size={24} onPress={() => {router.navigate('/historic')}} />,
+            title: 'Commandes favorites',
+            url: '/favorite',
         },
         {
             icon: <FontAwesome name="user" size={24} />,
-            title: 'Modifier son profil'
+            title: 'Modifier mon profil',
+            url: '/(user)/update/id'
         },
         {
             icon: <FontAwesome name="trash" size={24} />,
-            title: 'Supprimer votre compte'
-        },
-        {
-            icon: <Ionicons name="log-out" size={24} onPress={() => {
-                signOut();
-                router.navigate('/');
-            }} />,
-            title: 'Se déconnecter'
+            title: 'Supprimer votre compte',
+            url: '(user)/delete/id'
         }
     ]
 
@@ -100,9 +100,20 @@ const SettingsScreen = () => {
                 <FlatList
                     data={settingsData}
                     renderItem={({item}) => (
-                        <Item title={item.title} icon={item.icon} />
+                        <Item title={item.title} icon={item.icon} url={item.url} />
                     )}
                 />
+
+                <Pressable
+                    style={styles.itemContainer}
+                    onPress={() => {
+                        signOut();
+                        router.navigate('/');
+                    }}
+                >
+                    <Ionicons name="log-out" size={24} />
+                    <BodyFontHighlight text="Se déconnecter" />
+                </Pressable>
             </View>
         </SafeAreaView>
     );
@@ -132,7 +143,7 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderBottomWidth: 1,
         height: 60
-    }
+    },
 });
 
 export default SettingsScreen;

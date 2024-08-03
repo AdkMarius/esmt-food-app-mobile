@@ -61,7 +61,7 @@ const ProductDetailsScreen = () => {
 
             <Image source={{ uri: product?.image }} style={[styles.image, styles.section]} />
 
-            <PriceComponent price={product?.price.toString()} />
+            <PriceComponent price={product?.price.toString() as string} />
 
             <CTABlueButton
                 text="Ajouter au panier"

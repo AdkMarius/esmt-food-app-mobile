@@ -13,7 +13,7 @@ const UserNotLogin = () => {
             <View style={styles.action}>
                 <TitleFont text="Oops! Veuillez vous connectez"/>
 
-                <CTABlueButton text="Se connecter" onPress={() => router.navigate('/auth/sign-in')}/>
+                <CTABlueButton text="Se connecter" onPress={() => router.navigate('/sign-in')}/>
             </View>
         </View>
     );

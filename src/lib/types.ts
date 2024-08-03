@@ -75,3 +75,8 @@ export type User = {
   password: string;
   image: string | undefined;
 }
+
+export type CheckoutData = {
+  items: CartItem[],
+  total_price: number
+};

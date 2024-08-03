@@ -13,15 +13,6 @@ export default function TabLayout() {
             tabBarActiveTintColor: Colors.light.tintBlue,
         }}>
         <Tabs.Screen
-            name="index"
-            options={{
-              title: 'Home',
-              tabBarIcon: ({ color, focused }) => (
-                <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-              ),
-            }}
-        />
-        <Tabs.Screen
             name="menu"
             options={{
                 title: 'Menu',
@@ -41,29 +32,25 @@ export default function TabLayout() {
                 headerShown: false
             }}
         />
-        { session ? (
-            <Tabs.Screen
-                name="auth"
-                options={{
-                    title: 'Sign-in',
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon name={focused ? 'log-in' : 'log-in-outline'} color={color} />
-                    ),
-                    headerShown: false
-                }}
-            />
-        ) : (
-            <Tabs.Screen
-                name="auth"
-                options={{
-                    title: 'Sign-in',
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon name={focused ? 'log-in' : 'log-in-outline'} color={color} />
-                    ),
-                    headerShown: false
-                }}
-            />
-        )}
+        <Tabs.Screen
+            name="account"
+            options={{
+                title: 'Account',
+                tabBarIcon: ({ color, focused }) => (
+                    <TabBarIcon name={focused ? 'card' : 'card-outline'} color={color} />
+                ),
+                headerShown: false
+            }}
+        />
+        <Tabs.Screen
+            name="favorite"
+            options={{
+                title: 'Favorite',
+                tabBarIcon: ({ color, focused }) => (
+                    <TabBarIcon name={focused ? 'star' : 'star-outline'} color={color} />
+                ),
+            }}
+        />
     </Tabs>
   );
 }

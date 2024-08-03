@@ -5,11 +5,13 @@ import BodyFontHighlight from "@/src/components/typography/BodyFontHighlight";
 import {FontAwesome} from "@expo/vector-icons";
 import { Colors } from "@/src/constants/Colors";
 import BodyFont from "@/src/components/typography/BodyFont";
+import {useCart} from "@/src/providers/CardProvider";
 
 type Props = {
     cartItem: CartItem;
 }
 const CartItemComponent = ({ cartItem }: Props) => {
+    const { updateQuantity } = useCart();
 
     return (
         <View style={styles.container}>
@@ -23,7 +25,7 @@ const CartItemComponent = ({ cartItem }: Props) => {
                     </View>
                     <View style={styles.bottomLeftContainer}>
                         <View style={styles.icon}>
-                            <Pressable>
+                            <Pressable onPress={() => {updateQuantity(cartItem.id, -1)}}>
                                 <FontAwesome name="minus" size={24} color={Colors.light.tintBlue} />
                             </Pressable>
                         </View>
@@ -31,7 +33,7 @@ const CartItemComponent = ({ cartItem }: Props) => {
                             <BodyFont text={cartItem.quantity.toString()} textStyle={{ color: Colors.light.tintBlue}}/>
                         </View>
                         <View style={styles.icon}>
-                            <Pressable>
+                            <Pressable onPress={() => {updateQuantity(cartItem.id, 1)}}>
                                 <FontAwesome name="plus" size={24} color={Colors.light.tintBlue} />
                             </Pressable>
                         </View>
