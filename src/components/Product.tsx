@@ -3,45 +3,39 @@ import React from "react";
 import {Tables} from "@/src/lib/types";
 import {Link} from "expo-router";
 import BodyFont from "@/src/components/typography/BodyFont";
+import { Colors } from "@/src/constants/Colors";
+import StarsRating from "@/src/components/StarsRating";
 
-type ProductProps = {
-    item?: Tables<'products'>;
+type PopularProductsProps = {
+    id: number,
+    created_at: string,
+    name: string,
+    price: number,
+    image: string,
+    isAvailable: boolean,
+    isDayMenu: boolean,
+    id_category: number,
+    stars: number
+};
+
+type Props = {
+    item: PopularProductsProps;
 }
 
-const product: Tables<'products'> = {
-    id: 3,
-    created_at: "",
-    name: "Tchep poulet",
-    price: 1500,
-    image: "https://xtvafetdmggkohcoekoa.supabase.co/storage/v1/object/public/products/tchep-poisson.png?t=2024-08-02T04%3A29%3A05.288Z",
-    isAvailable: true,
-    isDayMenu: true,
-    id_category: 1
-}
-
-const Product = ( { item }: ProductProps) => {
-    if (item) {
-        return (
-            <Link href={`/menu/${item.id}`} asChild>
-                <Pressable style={styles.container}>
-                    <Image source={{ uri: item.image as string}} style={styles.image} />
-
-                    <View>
-                        <BodyFont text={item.name} />
-                    </View>
-
-                </Pressable>
-            </Link>
-        );
-    }
-
+const Product = ({ item }: Props) => {
     return (
-        <Link href={`/menu/${product.id}`} asChild>
+        <Link href={`/menu/${item?.id}`} asChild>
             <Pressable style={styles.container}>
-                <Image source={{ uri: product.image as string}} style={styles.image} />
+                <Image source={{ uri: item?.image as string}} style={styles.image} />
 
-                <View>
-                    <BodyFont text={product.name} />
+                <View style={styles.namePrice}>
+                    <BodyFont text={item?.name as string} />
+                    <BodyFont text={`${item?.price.toString()} fcfa`} textStyle={{ color: Colors.light.tintBlue}} />
+                    { item.stars ? (
+                        <StarsRating stars={item.stars} />
+                    ) : (
+                        <BodyFont text="Pas de notes" textStyle={{ color: "#b9cb00"}} />
+                    )}
                 </View>
 
             </Pressable>
@@ -51,20 +45,26 @@ const Product = ( { item }: ProductProps) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: 140,
-        height: 200,
+        width: 150,
+        height: 250,
         borderColor: '#f4f4f4',
         borderWidth: 2,
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 10,
         rowGap: 10,
-        marginBottom: 20
+        marginBottom: 20,
+        backgroundColor: '#f4f4f4'
     },
     image: {
         width: 100,
         aspectRatio: 1,
         borderRadius: 100
+    },
+    namePrice: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        rowGap: 10
     }
 })
 

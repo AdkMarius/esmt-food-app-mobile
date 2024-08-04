@@ -6,14 +6,26 @@ import {ActivityIndicator, FlatList, StyleSheet, View} from "react-native";
 import Product from "@/src/components/Product";
 import TitleFont from "@/src/components/typography/TitleFont";
 
+type PopularProductsProps = {
+    id: number,
+    created_at: string,
+    name: string,
+    price: number,
+    image: string,
+    isAvailable: boolean,
+    isDayMenu: boolean,
+    id_category: number,
+    stars: number
+};
+
 const fetchProducts = async () => {
     const res = await readAllProducts();
-    return res.data as Tables<'products'>[];
+    return res.data;
 };
 
 const ProductList = () => {
 
-    const { data: products, isLoading: isLoadingProducts } = useQuery<Tables<'products'>[]>({
+    const { data: products, isLoading: isLoadingProducts } = useQuery<PopularProductsProps[]>({
         queryKey: ['products'],
         queryFn: fetchProducts
     });
@@ -22,13 +34,12 @@ const ProductList = () => {
 
     return (
         <View style={styles.section}>
-            <TitleFont text="Products" />
+            <TitleFont text="Produits " />
 
             <FlatList
                 data={products}
                 renderItem={({ item }) => <Product item={item} />}
                 numColumns={2}
-                keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={{
                     justifyContent: "center",
                     alignItems: "center",
